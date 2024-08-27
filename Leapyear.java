@@ -1,5 +1,8 @@
 /*Define a class called A containg an instance variable y which denotes a year and and define a constant to initialise the instance  variable and 
-  method to check  whether it is a leap year or not.*/
+  method to check  whether it is a leap year or not.
+  Define a class called A containg an instance variable y which denotes a year and and define a constant to initialise the instance  variable and method to check  whether it is a leap year or not.
+Class B contains main method and calls the above method and displays whether y is a leap year or not a leap year .
+*/
 
 import java.util.Scanner;
 
