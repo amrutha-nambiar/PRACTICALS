@@ -1,3 +1,4 @@
+//write a java program to initialize two 2d array of order 2 x3 and to find their sums.program should display 3 arrays
 public class ArraySum
 {
 
