@@ -1,3 +1,4 @@
+//write a java program to display 3 x 3 matrix
 public class MatrixDisplay
 {
 
