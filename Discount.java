@@ -1,32 +1,36 @@
-public class Discount {
+//Write a Java program to calculate expenses with a discount of 10% if the total quantity purchased is more than 1000.
 
-    // Method to calculate the discounted amount
-    private static double calculateDiscount(double amount) {
-        if (amount > 1000) {
-            return amount * 0.9; // 10% discount
+public class Discount
+{
+
+    private static double calculateDiscount(double amount)
+    {
+        if (amount > 1000)
+        {
+            return amount * 0.9;
         }
-        return amount; // No discount
+        return amount;
     }
 
-    public static void main(String[] args) {
-        // Ensure at least one command-line argument is provided
-        if (args.length == 0) {
+    public static void main(String[] args)
+    {
+        if (args.length == 0)
+        {
             System.out.println("Please provide amounts as command-line arguments.");
             return;
         }
 
-        // Loop through each command-line argument using traditional for loop
-        for (int i = 0; i < args.length; i++) {
-            // Convert the command-line argument to a double
+        for (int i = 0; i < args.length; i++)
+        {
             double amount = Double.parseDouble(args[i]);
-
-            // Calculate the discounted amount
             double discountedAmount = calculateDiscount(amount);
 
-            // Display the result
-            if (amount > 1000) {
+            if (amount > 1000)
+            {
                 System.out.println("Amount: $" + amount + " -> Discounted amount: $" + discountedAmount);
-            } else {
+            }
+            else
+            {
                 System.out.println("Amount: $" + amount + " -> No Discount provided");
             }
         }
