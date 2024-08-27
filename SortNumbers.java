@@ -1,3 +1,5 @@
+//write a java program to sort the numbers given by an array
+
 import java.util.Arrays;
 
 public class SortNumbers
