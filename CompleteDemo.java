@@ -1,14 +1,14 @@
-//Define the following classes:
+/* Define the following classes:
 
-    //- Class Complete-1: Contains instance variables of string and integer type.
-    //Class Complete-2: Contains:
-    //- A Power method to find the square and cube of an integer type number.
-    //- An Add method to find the sum of two integer numbers.
-    //- Class Complete-3: Contains:
-   // - Instance variables of integer type x and y.
-    //- A method to display the values of x and y.
-    //- A Subtract method to take the difference of x and y.
-
+- Class Complete-1: Contains instance variables of string and integer type.
+- Class Complete-2: Contains:
+    - A Power method to find the square and cube of an integer type number.
+    - An Add method to find the sum of two integer numbers.
+- Class Complete-3: Contains:
+    - Instance variables of integer type x and y.
+    - A method to display the values of x and y.
+    - A Subtract method to take the difference of x and y.
+Create a Demo class with a main method that will invoke the methods of the above classes.*/
 
 
 class Complete1 
