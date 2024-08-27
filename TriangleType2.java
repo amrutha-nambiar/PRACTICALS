@@ -1,8 +1,5 @@
-
-
-- Equilateral
-- Isosceles
-- Scalene
+/*Write a Java program to determine whether three given positive integer (a, b, and c) can form the sides of a triangle. 
+    If yes,determine the type of triangle (Equilateral, Isosceles, or Scalene).*/
 public class TriangleType2
 {
 
