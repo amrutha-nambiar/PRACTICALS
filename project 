@@ -1,0 +1,284 @@
+import java.util.Random;
+import java.util.Scanner;
+
+class Patient 
+{
+    private String name;
+    private int age;
+    private String gender;
+    private String tokenNumber;
+    private String disease = "N/A";
+    private String doctorName = "N/A";
+    private double medicalFee = 0;
+
+    public Patient(String name, int age, String gender, String tokenNumber) 
+    {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.tokenNumber = tokenNumber;
+    }
+
+    public String getTokenNumber() 
+    {
+        return tokenNumber;
+    }
+
+    public void updateDetails(String disease, String doctorName, double medicalFee) 
+    {
+        this.disease = disease;
+        this.doctorName = doctorName;
+        this.medicalFee = medicalFee;
+    }
+
+    public void displayBill() 
+    {
+        System.out.println("\n--- BILL DETAILS ---");
+        System.out.println("Patient Name      : " + name);
+        System.out.println("Doctor            : " + doctorName);
+        System.out.println("Disease           : " + disease);
+        System.out.println("Medical Fee       : $" + medicalFee);
+        System.out.println("--------------------");
+    }
+
+    public String toString() 
+    {
+        return "Name: " + name +
+               "\nAge: " + age +
+               "\nGender: " + gender +
+               "\nToken Number: " + tokenNumber +
+               "\nDisease: " + disease +
+               "\nDoctor: " + doctorName +
+               "\nFee: $" + medicalFee;
+    }
+}
+
+class PatientRegistry 
+{
+    private Patient[] patients = new Patient[100];
+    private int count = 0;
+
+    public boolean addPatient(Patient patient) 
+    {
+        if (count < 100) 
+        {
+            patients[count++] = patient;
+            return true;
+        }
+        return false;
+    }
+
+    public Patient findPatientByToken(String token) 
+    {
+        for (int i = 0; i < count; i++) 
+        {
+            if (patients[i].getTokenNumber().equals(token)) 
+            {
+                return patients[i];
+            }
+        }
+        return null;
+    }
+
+    public void showAllPatients() 
+    {
+        if (count == 0) 
+        {
+            System.out.println("No patients registered.");
+        } 
+        else 
+        {
+            for (int i = 0; i < count; i++) 
+            {
+                System.out.println(patients[i]);
+            }
+        }
+    }
+}
+
+public class HospitalManagement 
+{
+    private PatientRegistry registry = new PatientRegistry();
+    private Scanner scanner = new Scanner(System.in);
+    private final String adminPassword = "admin123";
+
+    public static void main(String[] args) 
+    {
+        new HospitalManagement().mainMenu();
+    }
+
+    private void mainMenu() 
+    {
+        while (true) 
+        {
+            System.out.println("\n--- WELCOME TO JJ HOSPITAL ---");
+            System.out.println("1. Register Patient");
+            System.out.println("2. Admin Login");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) 
+            {
+                case 1 -> registerPatient();
+                case 2 -> 
+                {
+                    if (adminLogin()) 
+                        adminMenu();
+                    else 
+                        System.out.println("Invalid password.");
+                }
+                case 3 -> 
+                {
+                    System.out.println("Thank you for visiting JJ Hospital.");
+                    return;
+                }
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private boolean adminLogin() 
+    {
+        System.out.print("Enter Admin Password: ");
+        return scanner.nextLine().equals(adminPassword);
+    }
+
+    private void registerPatient() 
+    {
+        System.out.print("Enter patient name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter patient age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        
+        String gender;
+        while (true) 
+        {
+            System.out.print("Enter patient gender (M/F/Other): ");
+            gender = scanner.nextLine().trim();
+            
+            if (gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("F")) 
+            {
+                break; 
+            } 
+            else if (gender.equalsIgnoreCase("Other")) 
+            {
+                System.out.print("Please specify gender: ");
+                gender = scanner.nextLine().trim();
+                break; 
+            } 
+            else 
+            {
+                System.out.println("Invalid input. Please enter M, F, or Other.");
+            }
+        }
+        
+        String token = generateUniqueToken();
+
+        if (registry.addPatient(new Patient(name, age, gender, token))) 
+        {
+            System.out.println("Patient registered. Token: " + token);
+        } 
+        else 
+        {
+            System.out.println("Registration limit reached.");
+        }
+    }
+
+    private void adminMenu() 
+    {
+        while (true) 
+        {
+            System.out.println("\nAdmin Menu:");
+            System.out.println("1. View all patients");
+            System.out.println("2. Edit patient details");
+            System.out.println("3. Display patient bill");
+            System.out.println("4. View patient by token");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) 
+            {
+                case 1 -> registry.showAllPatients();
+                case 2 -> editPatientDetails();
+                case 3 -> displayPatientBill();
+                case 4 -> viewPatientByToken();
+                case 5 -> 
+                {
+                    return;
+                }
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void editPatientDetails() 
+    {
+        System.out.print("Enter patient token number: ");
+        Patient patient = registry.findPatientByToken(scanner.nextLine());
+
+        if (patient == null) 
+        {
+            System.out.println("Patient not found.");
+        } 
+        else 
+        {
+            System.out.print("Enter disease: ");
+            String disease = scanner.nextLine();
+            System.out.print("Enter doctor name: ");
+            String doctorName = scanner.nextLine();
+            System.out.print("Enter medical fee: ");
+            double fee = scanner.nextDouble();
+            scanner.nextLine();
+
+            patient.updateDetails(disease, doctorName, fee);
+            System.out.println("Details updated.");
+            patient.displayBill();
+        }
+    }
+
+    private void displayPatientBill() 
+    {
+        System.out.print("Enter token number: ");
+        Patient patient = registry.findPatientByToken(scanner.nextLine());
+
+        if (patient == null) 
+        {
+            System.out.println("Patient not found.");
+        } 
+        else 
+        {
+            patient.displayBill();
+        }
+    }
+
+    private void viewPatientByToken() 
+    {
+        System.out.print("Enter token number: ");
+        Patient patient = registry.findPatientByToken(scanner.nextLine());
+
+        if (patient == null) 
+        {
+            System.out.println("Patient not found.");
+        } 
+        else 
+        {
+            System.out.println(patient);
+        }
+    }
+
+    private String generateUniqueToken() 
+    {
+        int token = new Random().nextInt(1000000);
+        String tokenStr = String.valueOf(token);
+        while (tokenStr.length() < 6) 
+        {
+            tokenStr = "0" + tokenStr;
+        }
+        return tokenStr;
+    }
+}
